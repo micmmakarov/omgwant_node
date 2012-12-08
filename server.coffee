@@ -1,8 +1,8 @@
-handleRequest = (req, res) ->
-  res.writeHead 200,
-    "content-type": "text/plain"
+express = require("express")
+app = express.createServer(express.logger())
+app.get "/", (request, response) ->
+  response.send "Hello World!"
 
-  res.write "Hello world!"
-  res.end()
-
-require("http").createServer(handleRequest).listen 8080
+port = process.env.PORT or 5000
+app.listen port, ->
+  console.log "Listening on " + port
