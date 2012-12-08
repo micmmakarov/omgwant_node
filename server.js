@@ -11,13 +11,14 @@
   app = express.createServer(express.logger());
 
   app.get("/", function(request, response) {
-    rest.get("http://google.com").on("complete", function(result) {});
-    if (result instanceof Error) {
-      sys.puts("Error: " + result.message);
-      this.retry(5000);
-    } else {
-      sys.puts(result);
-    }
+    rest.get("http://google.com").on("complete", function(result) {
+      if (result instanceof Error) {
+        sys.puts("Error: " + result.message);
+        return this.retry(5000);
+      } else {
+        return sys.puts(result);
+      }
+    });
     return response.send("OMG Hello World!");
   });
 
