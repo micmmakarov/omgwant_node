@@ -11,15 +11,26 @@
   app = express.createServer(express.logger());
 
   app.get("/", function(request, response) {
-    rest.get("http://google.com").on("complete", function(result) {
+    var search_string;
+    response.writeHead(200, {
+      'content-type': 'application/json'
+    });
+    search_string = request.query.search;
+    return rest.get("http://api.shopstyle.com/action/apiSearch?pid=uid7444-8563962-34&fts=" + search_string + "&min=0&count=30&format=json").on("complete", function(result) {
       if (result instanceof Error) {
         sys.puts("Error: " + result.message);
         return this.retry(5000);
       } else {
-        return sys.puts(result);
+        response.write(result);
+        return response.end();
       }
     });
-    return response.send("OMG Hello World!");
+  });
+
+  app.get("/system/:id", function(request, response) {
+    var id;
+    id = request.params.id;
+    return response.send("OMG Hello World hahaha!");
   });
 
   port = process.env.PORT || 5000;
