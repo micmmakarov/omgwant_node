@@ -11,17 +11,19 @@
   app = express.createServer(express.logger());
 
   app.get("/", function(request, response) {
-    var search_string;
+    var callback_string, search_string;
     response.writeHead(200, {
-      'content-type': 'application/json'
+      'content-type': 'plain/text',
+      'Accept': '*/*'
     });
     search_string = request.query.search;
+    callback_string = request.query.callback;
     return rest.get("http://api.shopstyle.com/action/apiSearch?pid=uid7444-8563962-34&fts=" + search_string + "&min=0&count=30&format=json").on("complete", function(result) {
       if (result instanceof Error) {
         sys.puts("Error: " + result.message);
         return this.retry(5000);
       } else {
-        response.write(result);
+        response.write("" + callback_string + "(" + result + ");");
         return response.end();
       }
     });
