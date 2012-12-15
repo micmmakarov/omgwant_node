@@ -9,10 +9,7 @@ app.get "/", (request, response) ->
   #response.send "OMG Hello World!#{request.query.search}"
   search_string = request.query.search
   callback_string = request.query.callback
-  #response.write "So the string is"
-  #response.write search_string
-  #response.end()
-  rest.get("http://api.shopstyle.com/action/apiSearch?pid=uid7444-8563962-34&fts=#{search_string}&min=0&count=30&format=json").on "complete", (result) ->
+  rest.get("http://api.shopstyle.com/action/apiSearch?pid=uid7444-8563962-34&fts=#{search_string}&min=0&count=6&format=json").on "complete", (result) ->
     if result instanceof Error
       sys.puts "Error: " + result.message
       @retry 5000 # try again after 5 sec

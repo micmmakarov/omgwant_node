@@ -18,7 +18,7 @@
     });
     search_string = request.query.search;
     callback_string = request.query.callback;
-    return rest.get("http://api.shopstyle.com/action/apiSearch?pid=uid7444-8563962-34&fts=" + search_string + "&min=0&count=30&format=json").on("complete", function(result) {
+    return rest.get("http://api.shopstyle.com/action/apiSearch?pid=uid7444-8563962-34&fts=" + search_string + "&min=0&count=6&format=json").on("complete", function(result) {
       if (result instanceof Error) {
         sys.puts("Error: " + result.message);
         return this.retry(5000);
